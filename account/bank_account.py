@@ -33,8 +33,8 @@ class BankAccount:
     def status(self) -> int:
         return self.__status
 
-    def update_balance(self, amount):
-        self.__balance += amount
+    def update_balance(self, amount: float) -> None:
+        self.__balance = amount
 
     def deposit(self, amount: float) -> None:
         if amount < 0:
@@ -44,8 +44,9 @@ class BankAccount:
     def withdraw(self, amount: float) -> None:
         if amount < 0:
             raise ValueError("amount must be a value greater than or equal to zero.")
-        self.balance -+ amount
-
+        if amount > self.__balance:
+            raise ValueError("amount cannot exceed the account balance.")
+        self.__balance -= amount
     def __str__(self) -> str:
             return (f"Account ID: {self.__account_id}\n"
                     f"Balance: {self.__balance}\n"

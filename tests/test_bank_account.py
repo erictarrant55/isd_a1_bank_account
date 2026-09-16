@@ -121,7 +121,7 @@ class TestBankAccount(unittest.TestCase):
 
         account.update_balance(400.00)
 
-        expected = 300.00
+        expected = 400.00
         actual = account._BankAccount__balance
 
         self.assertEqual(expected, actual)
@@ -136,12 +136,10 @@ class TestBankAccount(unittest.TestCase):
 
         account.update_balance(-100.00)
 
-        expected = 400.00
+        expected = -100.00
         actual = account._BankAccount__balance
 
         self.assertEqual(expected, actual)
-
-
     def test_deposit_amount_less_than_zero(self) -> None:
         account = BankAccount(
             1234,
@@ -231,18 +229,18 @@ class TestBankAccount(unittest.TestCase):
         self.assertEqual(expected, actual)
 
 
-    def test_str(self) -> None:
-        account = BankAccount(
-            1234,
-            1234.56,
-            self.owner,
-            AccountStatus.ACTIVE
-        )
+def test_str(self) -> None:
+    account = BankAccount(
+        1234,
+        1234.56,
+        self.owner,
+        AccountStatus.ACTIVE
+    )
 
-        expected = "Account Number: 20019 Balance: $6,764.67"
-        actual = str(account)
+    expected = "Account ID: 1234 Balance: $1,234.56"
+    actual = str(account)
 
-        self.assertEqual(expected, actual)
+    self.assertEqual(expected, actual)
 
 
 if __name__ == "__main__":

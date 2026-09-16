@@ -39,9 +39,9 @@ class Client:
         self.__email_address = email.normalized
 
     def __str__(self) -> str:
-                return (f"Client ID: {self.__client_id()}\n"
-                        f"Name: {self.__name()}\n"
-                        f"Email Address: {self.__email_address()}")
+                return (f"Client ID: {self.__client_id}\n"
+                        f"Name: {self.__name}\n"
+                        f"Email Address: {self.__email_address}")
 
     
 
