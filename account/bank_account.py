@@ -19,37 +19,35 @@ class BankAccount:
 
     @property
     def account_id(self) -> int:
-        return self.account_id
+        return self.__account_id
 
     @property
-    def balance(self) -> balance:
-        return self.balance
+    def balance(self) -> float:
+        return self.__balance
 
     @property
     def owner(self) -> str:
-        return self.owner
+        return self.__owner
 
     @property
     def status(self) -> int:
-        return self.status
+        return self.__status
 
     def update_balance(self, amount):
-        self.balance += amount
+        self.__balance += amount
 
-    def deposit(self, amount):
-        if amount >= 0:
-            raise ValueError("Amount must be a value greater than"
-        "or equal to zero.")
-        self.balance += amount
-
-    def withdraw(self, amount):
+    def deposit(self, amount: float) -> None:
         if amount < 0:
-            raise ValueError("Amount must be a value greater than ir equal" \
-            "to zero.")
+            raise ValueError("amount must be a value greater than or equal to zero.")
+        self.__balance += amount
+
+    def withdraw(self, amount: float) -> None:
+        if amount < 0:
+            raise ValueError("amount must be a value greater than or equal to zero.")
         self.balance -+ amount
 
     def __str__(self) -> str:
-            return (f"Account ID: {self.__account_id()}\n"
-                    f"Balance: {self.__balance()}\n"
-                    f"Owner: {self.__owner()}\n"
-                    f"Status: {self.__status()}")
+            return (f"Account ID: {self.__account_id}\n"
+                    f"Balance: {self.__balance}\n"
+                    f"Owner: {self.__owner}\n"
+                    f"Status: {self.__status}")
