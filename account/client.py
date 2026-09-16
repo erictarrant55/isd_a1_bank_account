@@ -1,4 +1,5 @@
 from account.account_status import AccountStatus
+from email_validator import validate_email, EmailNotValidError
 
 class Client:
     def __init__(
@@ -11,8 +12,12 @@ class Client:
             raise ValueError("client_id must be a value greater than zero.")
         if name == len(""):
             raise ValueError("name cannot be an empty string.") 
-        # if not isinstance(email_address, int):
-        #     raise ValueError(validate_email)
+        email_address = email_address.strip()
+
+        email = validate_email(
+            email_address,
+            check_deliverability=False
+        )
         self.__client_id = client_id
         self.__name = name
         self.__email_address = email_address
@@ -27,11 +32,20 @@ class Client:
     @property
     def email_address(self) -> str:
         return self.email_address
+    @email_address.setter
+    def email_address(self, email_address: str) -> None:
+        email_address = email_address.strip()
+
+        email = validate_email(
+            email_address,
+            check_deliverability=False
+            )
+        self.__email_address = email.normalized
 
     def __str__(self) -> str:
                 return (f"Client ID: {self.__client_id()}\n"
                         f"Name: {self.__name()}\n"
                         f"Email Address: {self.__email_address()}")
 
-    #def validate_email():
+    
 

@@ -1,6 +1,5 @@
 from account.account_status import AccountStatus
 
-
 class BankAccount:
     def __init__(
         self,
@@ -34,23 +33,24 @@ class BankAccount:
     def status(self) -> int:
         return self.status
 
-    def update_balance(self, balance):
-        self.balance = balance
+    def update_balance(self, amount):
+        self.balance += amount
 
-    def deposit(self, balance):
-        if balance >= 0:
+    def deposit(self, amount):
+        if amount >= 0:
             raise ValueError("Amount must be a value greater than"
         "or equal to zero.")
-        self.balance += balance
+        self.balance += amount
 
-    def withdraw(self, balance):
-        if balance < 0:
+    def withdraw(self, amount):
+        if amount < 0:
             raise ValueError("Amount must be a value greater than ir equal" \
             "to zero.")
-        self.balance -+ balance
-        
+        self.balance -+ amount
+
     def __str__(self) -> str:
             return (f"Account ID: {self.__account_id()}\n"
                     f"Balance: {self.__balance()}\n"
                     f"Owner: {self.__owner()}\n"
                     f"Status: {self.__status()}")
+self.update_balance(amount) 
