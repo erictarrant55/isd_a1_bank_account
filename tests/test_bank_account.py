@@ -9,7 +9,7 @@ class TestBankAccount(unittest.TestCase):
 
     def setUp(self) -> None:
         self.owner = Client(
-            12345,
+            1234,
             "Eric Tarrant",
             "etarrant@rrc.ca"
         )
@@ -46,7 +46,7 @@ class TestBankAccount(unittest.TestCase):
             AccountStatus.ACTIVE
         )
 
-        self.assertEqual(20019, account._BankAccount__account_id)
+        self.assertEqual(1234, account._BankAccount__account_id)
         self.assertEqual(500.00, account._BankAccount__balance)
         self.assertEqual(self.owner, account._BankAccount__owner)
         self.assertEqual(
@@ -119,7 +119,7 @@ class TestBankAccount(unittest.TestCase):
             AccountStatus.ACTIVE
         )
 
-        account.update_balance(100.00)
+        account.update_balance(400.00)
 
         expected = 300.00
         actual = account._BankAccount__balance
@@ -166,7 +166,7 @@ class TestBankAccount(unittest.TestCase):
 
         account.deposit(100.00)
 
-        expected = 300.00
+        expected = 400.00
         actual = account._BankAccount__balance
 
         self.assertEqual(expected, actual)

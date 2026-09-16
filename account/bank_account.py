@@ -9,8 +9,8 @@ class BankAccount:
         status=AccountStatus.ACTIVE):
         """Represents a bank account of a client."""
         
-        if len(account_id.strip()) <= 0:
-            raise ValueError("account_id must be a value greater than 0.")
+        if account_id <= 0:
+            raise ValueError("account_id must be a value greater than zero.")
 
         self.__account_id = account_id
         self.__balance = balance
@@ -53,4 +53,3 @@ class BankAccount:
                     f"Balance: {self.__balance()}\n"
                     f"Owner: {self.__owner()}\n"
                     f"Status: {self.__status()}")
-self.update_balance(amount) 

@@ -8,16 +8,12 @@ class Client:
             name,
             email_address):
         """Represents the client profile."""
-        if len(client_id.strip()) <= 0:
+        if client_id <= 0:
             raise ValueError("client_id must be a value greater than zero.")
-        if name == len(""):
-            raise ValueError("name cannot be an empty string.") 
-        email_address = email_address.strip()
-
-        email = validate_email(
-            email_address,
-            check_deliverability=False
-        )
+        if len(name.strip()) <= 0:
+            raise ValueError("name must not be empty.")
+        if len(email_address.strip()) <= 0:
+            raise ValueError("email_address must not be empty.")
         self.__client_id = client_id
         self.__name = name
         self.__email_address = email_address
