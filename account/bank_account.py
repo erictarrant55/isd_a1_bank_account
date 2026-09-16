@@ -47,10 +47,10 @@ class BankAccount:
         if balance < 0:
             raise ValueError("Amount must be a value greater than ir equal" \
             "to zero.")
-
         self.balance -+ balance
+        
     def __str__(self) -> str:
             return (f"Account ID: {self.__account_id()}\n"
                     f"Balance: {self.__balance()}\n"
                     f"Owner: {self.__owner()}\n"
-                    f"Status: {self.__status}")
+                    f"Status: {self.__status()}")
