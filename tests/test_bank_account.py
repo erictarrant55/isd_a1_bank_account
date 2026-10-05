@@ -4,6 +4,8 @@ from account.account_status import AccountStatus
 from account.bank_account import BankAccount
 from account.client import Client
 
+__author__ = "Eric Tarrant"
+__verison__ = "1.0.0"
 
 class TestBankAccount(unittest.TestCase):
 

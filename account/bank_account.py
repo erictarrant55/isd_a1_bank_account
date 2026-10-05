@@ -1,6 +1,22 @@
 from account.account_status import AccountStatus
 
 class BankAccount:
+    """
+    Represents a bank account to a client.
+
+    The BankAccount class stores information about a bank account,
+    which includes the account_id, balance, owner and the status of the
+    account.
+
+    Attributes:
+        account_id (int): Unique identifier for the account.
+        balance (float): the Balance of the account.
+        owner (str): Name of the account owner.
+        status (AccountStatus): Current status of the account.
+
+    Raises:
+        ValueError: If account_id is less than or equal to zero.
+    """
     def __init__(
         self,
         account_id,

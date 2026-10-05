@@ -4,6 +4,8 @@ from email_validator import EmailNotValidError
 
 from account.client import Client
 
+__author__ = "Eric Tarrant"
+__verison__ = "1.0.0"
 
 class TestClient(unittest.TestCase):
 

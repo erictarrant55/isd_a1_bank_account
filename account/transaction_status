@@ -1,0 +1,18 @@
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
+from enum import Enum
+
+class TransactionStatus(int, Enum):
+    """
+    Represents the status of a bank account transaction.
+    
+    
+    Attributes:
+            PENDING (int): Account is currently pending.
+            PROCESSING (int): Account is processing.
+            FAILED (int): Account has failed.
+    """
+    PENDING = 1
+    PROCESSING = 2
+    FAILED = 3

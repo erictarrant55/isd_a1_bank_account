@@ -1,5 +1,8 @@
 from enum import Enum
 
+__author__ = "Eric Tarrant"
+__verison__ = "1.0.0"
+
 class AccountStatus(int, Enum):
     """
     Represents the status of a bank account.
