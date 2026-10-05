@@ -7,6 +7,9 @@ class TransactionStatus(int, Enum):
     """
     Represents the status of a bank account transaction.
     
+    TransactionStatus is an enumeration that is used to check the
+    transaction status.
+    
     
     Attributes:
             PENDING (int): Account is currently pending.
@@ -16,3 +19,5 @@ class TransactionStatus(int, Enum):
     PENDING = 1
     PROCESSING = 2
     FAILED = 3
+
+    
