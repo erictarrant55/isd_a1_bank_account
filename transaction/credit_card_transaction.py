@@ -6,10 +6,6 @@ from transaction.transaction import Transaction
 from transaction.transaction_status import TransactionStatus
 
 
-
-__author__ = "Eric Tarrant"
-__version__ = "1.0.0"
-
 class CreditCardTransaction(Transaction):
     FEE_RATE = Decimal("0.02")
 
@@ -27,21 +23,14 @@ class CreditCardTransaction(Transaction):
             raise ValueError("amount must be greater than zero")
 
         super().__init__(transaction_id, amount, account)
-
-        self.__transaction_id = transaction_id
-        self.__amount = amount
-        self.__account = account
         self.__authorization_code = authorization_code
 
-    @property 
+    @property
+    def authorization_code(self) -> str:
+        return self.__authorization_code
+
+    @property
     def fees(self) -> Decimal:
-        """
-        Return the fees associated with the credit card transaction.
-
-        Returns:
-            decimal.Decimal: The fees associated with the credit card transaction.
-        """
-
         return self.amount * self.FEE_RATE
 
     def process(self) -> None:
@@ -57,10 +46,10 @@ class CreditCardTransaction(Transaction):
             self._status = TransactionStatus.PROCESSED
 
     def __str__(self) -> str:
-        """
-        Return a string representation of the credit card transaction.
-
-        Returns:
-            str: A string representation of the credit card transaction.
-        """
-        return f"CreditCardTransaction(transaction_id={self.__transaction_id}, amount={self.__amount}, account={self.__account}, authorization_code={self.__authorization_code})"
+        return (
+            f"ID: {self.transaction_id}\n"
+            f"STATUS: {self.status.name}\n"
+            f"AMOUNT: ${self.amount:,.2f}\n"
+            f"SOURCE ACCT: {self.account.account_id}\n"
+            f"AUTH CODE: {self.authorization_code}"
+        )
