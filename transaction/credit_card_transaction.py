@@ -1,28 +1,37 @@
-from transaction.transaction_status import TransactionStatus
 from decimal import Decimal
+
+from account.account_status import AccountStatus
 from account.bank_account import BankAccount
+from transaction.transaction import Transaction
+from transaction.transaction_status import TransactionStatus
+
+
 
 __author__ = "Eric Tarrant"
 __version__ = "1.0.0"
 
-class CreditCardTransaction:
-    def __int__(
+class CreditCardTransaction(Transaction):
+    FEE_RATE = Decimal("0.02")
+
+    def __init__(
         self,
         transaction_id: str,
         amount: Decimal,
         account: BankAccount,
-        authorization_code: str):
+        authorization_code: str
+    ):
+        if transaction_id.strip() == "":
+            raise ValueError("transaction_id cannot be blank")
 
-    if transaction_id == "":
-        raise ValueError("transaction_id cannot be blank.")
+        if amount <= 0:
+            raise ValueError("amount must be greater than zero")
 
-    if account <= 0:
-        raise ValueError("account must be a greater value than zero.")
+        super().__init__(transaction_id, amount, account)
 
-    self.__transaction_id = transaction_id
-    self.__amount = amount
-    self.__account = account
-    self.__authorization_code = authorization_code
+        self.__transaction_id = transaction_id
+        self.__amount = amount
+        self.__account = account
+        self.__authorization_code = authorization_code
 
     @property 
     def fees(self) -> Decimal:
@@ -33,16 +42,19 @@ class CreditCardTransaction:
             decimal.Decimal: The fees associated with the credit card transaction.
         """
 
-        return self.__fees
+        return self.amount * self.FEE_RATE
 
-    def process() -> None:
-        """
-        Process the credit card transaction.
+    def process(self) -> None:
+        if (self.account.status != AccountStatus.ACTIVE
+                or self.amount + self.fees > self.account.balance
+                or self.authorization_code.strip() == ""):
+            self._status = TransactionStatus.FAILED
+            return
 
-        This method would typically involve validating the transaction,
-        checking for sufficient funds, and updating the account balance.
-        """
-        pass  
+        if self.status == TransactionStatus.PENDING:
+            self.account.withdraw(self.amount)
+            self.account.withdraw(self.fees)
+            self._status = TransactionStatus.PROCESSED
 
     def __str__(self) -> str:
         """

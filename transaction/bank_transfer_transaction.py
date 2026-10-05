@@ -7,6 +7,12 @@ class BankTransferTransaction(Transaction):
     BASE_FEE = Decimal("1.00")
     FEE_RATE = Decimal("0.007")
     def __init__(self, transaction_id, amount, account, target_account):
+        if transaction_id.strip() == "":
+            raise ValueError("transaction_id cannot be blank")
+
+        if amount <= 0:
+            raise ValueError("amount must be greater than zero")
+        
         super().__init__(transaction_id, amount, account)
         self.__target_account = target_account
 
