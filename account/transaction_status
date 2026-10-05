@@ -19,5 +19,3 @@ class TransactionStatus(int, Enum):
     PENDING = 1
     PROCESSING = 2
     FAILED = 3
-
-    

@@ -6,8 +6,9 @@ __version__ = "1.0.0"
 
 class Transaction:
     def __init__(
+        self,
         transaction_id: str,
-        account: decimal.Decimal,
+        amount: Decimal,
         status: TransactionStatus,
         account: BankAccount):
 
@@ -31,7 +32,7 @@ class Transaction:
         return self.__transaction_id
 
     @property
-    def acount(self) -> decimal.Decimal:
+    def acount(self) -> Decimal:
         """
         Return the account.
 
