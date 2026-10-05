@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from account.account_status import AccountStatus
 from account.bank_account import BankAccount
-from acccount.transaction import Transaction
+from account.transaction import Transaction
 from account.transaction_status import TransactionStatus
 
 class BankTransferTransaction(Transaction):
