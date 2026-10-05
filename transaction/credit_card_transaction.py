@@ -1,9 +1,9 @@
-__author__ = "Eric Tarrant"
-__version__ = "1.0.0"
-from account.transaction_status import TransactionStatus
+from transaction.transaction_status import TransactionStatus
 from decimal import Decimal
 from account.bank_account import BankAccount
 
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
 
 class CreditCardTransaction:
     def __int__(

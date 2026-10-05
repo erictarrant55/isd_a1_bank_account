@@ -1,7 +1,7 @@
+from enum import Enum
+
 __author__ = "Eric Tarrant"
 __version__ = "1.0.0"
-
-from enum import Enum
 
 class TransactionStatus(int, Enum):
     """

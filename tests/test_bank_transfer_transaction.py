@@ -3,9 +3,12 @@ import unittest
 from account.account_status import AccountStatus
 from account.bank_account import BankAccount
 from account.client import Client
-from account.bank_transfer_transaction import BankTransferTransaction
-from account.transaction_status import TransactionStatus
+from transaction.bank_transfer_transaction import BankTransferTransaction
+from transaction.transaction_status import TransactionStatus
 from decimal import Decimal
+
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
 
 class TestInit(unittest.TestCase):
     def setUp(self) -> None:
@@ -48,30 +51,30 @@ class TestInit(unittest.TestCase):
         actual = str(context.exception)
         self.assertEqual(expected, actual)
 
-    def test_account_is_less_than_zero(self) -> None:
-        # Arrange
-        transaction_id = "123"
-        amount = Decimal("100.00")
-        account = ("-1.00")
-        target_account = self.target_account
-        # Act
-        with self.assertRaises(ValueError) as context:
-            BankTransferTransaction(
-                transaction_id,
-                amount,
-                account,
-                target_account
-            )
-        # Assert
-        expected = "account must be a value greater than zero"
-        actual = str(context.exception)
-        self.assertEqual(expected, actual)
+        def test_amount_is_less_than_zero(self) -> None:
+            # Arrange
+            transaction_id = "123"
+            amount = Decimal("-1.00")
+            account = self.account
+            target_account = self.target_account
+            # Act
+            with self.assertRaises(ValueError) as context:
+                BankTransferTransaction(
+                    transaction_id,
+                    amount,
+                    account,
+                    target_account
+                )
+            # Assert
+            expected = "amount must be greater than zero"
+            actual = str(context.exception)
+            self.assertEqual(expected, actual)
 
-    def test_account_is_zero(self) -> None:
+    def test_amount_is_zero(self) -> None:
         # Arrange
         transaction_id = "123"
-        amount = Decimal("100.00")
-        account = ("0.00")
+        amount = Decimal("0.00")
+        account = self.account
         target_account = self.target_account
         # Act
         with self.assertRaises(ValueError) as context:
@@ -82,7 +85,7 @@ class TestInit(unittest.TestCase):
                 target_account
             )
         # Assert
-        expected = "account must be a value greater than zero"
+        expected = "amount must be greater than zero"
         actual = str(context.exception)
         self.assertEqual(expected, actual)
 
@@ -152,7 +155,7 @@ class TestFees(unittest.TestCase):
         expected = Decimal("1.00")
         self.assertEqual(expected, actual)
 
-    def test_returns_percentage_of_transaction_amount(self) -> None:
+    def test_returns_zero_point_seven_of_transaction_amount(self) -> None:
         # Arrange
         transaction = BankTransferTransaction(
             "123",
@@ -193,7 +196,7 @@ class TestProcess(unittest.TestCase):
             AccountStatus.ACTIVE
         )
 
-    def test_account_status_is_not_active(self) -> None:
+    def test_account_has_a_status_other_than_active(self) -> None:
         # Arrange
         self.account._BankAccount__status = AccountStatus.SUSPENDED
 
@@ -212,7 +215,7 @@ class TestProcess(unittest.TestCase):
         actual = transaction.status
         self.assertEqual(expected, actual)
 
-    def test_target_account_status_is_not_active(self) -> None:
+    def test_target_account_has_a_status_other_than_active(self) -> None:
         # Arrange
         self.target_account._BankAccount__status = AccountStatus.SUSPENDED
 
@@ -231,7 +234,7 @@ class TestProcess(unittest.TestCase):
         actual = transaction.status
         self.assertEqual(expected, actual)
 
-    def test_amount_and_fees_are_greater_than_balance(self) -> None:
+    def test_sum_of_amount_and_fee_is_greater_than_zero_balance(self) -> None:
         # Arrange
         transaction = BankTransferTransaction(
             "123",
