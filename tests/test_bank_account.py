@@ -1,249 +1,167 @@
 import unittest
+from decimal import Decimal
 
 from account.account_status import AccountStatus
 from account.bank_account import BankAccount
 from account.client import Client
 
-__author__ = "Eric Tarrant"
-__verison__ = "1.0.0"
 
 class TestBankAccount(unittest.TestCase):
 
-    def setUp(self) -> None:
-        self.owner = Client(
-            1234,
+    def setUp(self):
+        self.client = Client(
+            1001,
             "Eric Tarrant",
             "etarrant@rrc.ca"
         )
 
-    def test_init_account_id_less_than_zero(self) -> None:
-        with self.assertRaisesRegex(
-            ValueError,
-            "account_id must be a value greater than zero."
-        ):
+        self.account = BankAccount(
+            20019,
+            Decimal("400.00"),
+            self.client,
+            AccountStatus.ACTIVE
+        )
+
+    def test_init_account_id_less_than_zero(self):
+        try:
             BankAccount(
                 -1,
-                100.00,
-                self.owner,
+                Decimal("400.00"),
+                self.client,
                 AccountStatus.ACTIVE
             )
+        except ValueError as exception:
+            self.assertEqual(type(exception), ValueError)
+            self.assertEqual(
+                str(exception),
+                "account_id must be a value greater than zero"
+            )
 
-    def test_init_account_id_zero(self) -> None:
-        with self.assertRaisesRegex(
-            ValueError,
-            "account_id must be a value greater than zero."
-        ):
+    def test_init_account_id_is_zero(self):
+        try:
             BankAccount(
                 0,
-                100.00,
-                self.owner,
+                Decimal("400.00"),
+                self.client,
                 AccountStatus.ACTIVE
             )
+        except ValueError as exception:
+            self.assertEqual(type(exception), ValueError)
+            self.assertEqual(
+                str(exception),
+                "account_id must be a value greater than zero"
+            )
 
-    def test_init_new_instance(self) -> None:
-        account = BankAccount(
-            1234,
-            500.00,
-            self.owner,
-            AccountStatus.ACTIVE
-        )
-
-        self.assertEqual(1234, account._BankAccount__account_id)
-        self.assertEqual(500.00, account._BankAccount__balance)
-        self.assertEqual(self.owner, account._BankAccount__owner)
+    def test_init_account_id(self):
         self.assertEqual(
-            AccountStatus.ACTIVE,
-            account._BankAccount__status
+            self.account._BankAccount__account_id,
+            20019
         )
 
+    def test_init_balance(self):
+        self.assertEqual(
+            self.account._BankAccount__balance,
+            Decimal("400.00")
+        )
 
-    def test_account_id_property(self) -> None:
-        account = BankAccount(
-            1234,
-            500.00,
-            self.owner,
+    def test_init_owner(self):
+        self.assertEqual(
+            self.account._BankAccount__owner,
+            self.client
+        )
+
+    def test_init_status(self):
+        self.assertEqual(
+            self.account._BankAccount__status,
             AccountStatus.ACTIVE
         )
 
-        expected = 1234
-        actual = account.account_id
+    def test_update_balance_increase(self):
+        self.account.update_balance(Decimal("100.00"))
 
-        self.assertEqual(expected, actual)
-
-
-    def test_balance_property(self) -> None:
-        account = BankAccount(
-            1234,
-            300.00,
-            self.owner,
-            AccountStatus.ACTIVE
+        self.assertEqual(
+            self.account.balance,
+            Decimal("500.00")
         )
 
-        expected = 300.00
-        actual = account.balance
+    def test_update_balance_decrease(self):
+        self.account.update_balance(Decimal("-100.00"))
 
-        self.assertEqual(expected, actual)
-
-
-    def test_owner_property(self) -> None:
-        account = BankAccount(
-            1234,
-            300.00,
-            self.owner,
-            AccountStatus.ACTIVE
+        self.assertEqual(
+            self.account.balance,
+            Decimal("300.00")
         )
 
-        expected = self.owner
-        actual = account.owner
+    def test_deposit_increases_balance(self):
+        self.account.deposit(Decimal("100.00"))
 
-        self.assertEqual(expected, actual)
-
-
-    def test_status_property(self) -> None:
-        account = BankAccount(
-            1234,
-            300.00,
-            self.owner,
-            AccountStatus.ACTIVE
+        self.assertEqual(
+            self.account.balance,
+            Decimal("500.00")
         )
 
-        expected = AccountStatus.ACTIVE
-        actual = account.status
+    def test_deposit_amount_zero(self):
+        self.account.deposit(Decimal("0.00"))
 
-        self.assertEqual(expected, actual)
-
-
-    def test_update_balance_positive_amount(self) -> None:
-        account = BankAccount(
-            1234,
-            300.00,
-            self.owner,
-            AccountStatus.ACTIVE
+        self.assertEqual(
+            self.account.balance,
+            Decimal("400.00")
         )
 
-        account.update_balance(400.00)
+    def test_deposit_negative_amount(self):
+        try:
+            self.account.deposit(Decimal("-100.00"))
+        except ValueError as exception:
+            self.assertEqual(type(exception), ValueError)
+            self.assertEqual(
+                str(exception),
+                "amount must be a value greater than or equal to zero"
+            )
 
-        expected = 400.00
-        actual = account._BankAccount__balance
+    def test_withdraw_decreases_balance(self):
+        self.account.withdraw(Decimal("100.00"))
 
-        self.assertEqual(expected, actual)
-
-    def test_update_balance_negative_amount(self) -> None:
-        account = BankAccount(
-            1234,
-            600.00,
-            self.owner,
-            AccountStatus.ACTIVE
+        self.assertEqual(
+            self.account.balance,
+            Decimal("300.00")
         )
 
-        account.update_balance(-100.00)
+    def test_withdraw_amount_zero(self):
+        self.account.withdraw(Decimal("0.00"))
 
-        expected = -100.00
-        actual = account._BankAccount__balance
-
-        self.assertEqual(expected, actual)
-    def test_deposit_amount_less_than_zero(self) -> None:
-        account = BankAccount(
-            1234,
-            300.00,
-            self.owner,
-            AccountStatus.ACTIVE
+        self.assertEqual(
+            self.account.balance,
+            Decimal("400.00")
         )
 
-        with self.assertRaisesRegex(
-            ValueError,
-            "amount must be a value greater than or equal to zero."
-        ):
-            account.deposit(-100.00)
+    def test_withdraw_negative_amount(self):
+        try:
+            self.account.withdraw(Decimal("-100.00"))
+        except ValueError as exception:
+            self.assertEqual(type(exception), ValueError)
+            self.assertEqual(
+                str(exception),
+                "amount must be a value greater than or equal to zero"
+            )
 
-    def test_deposit_increases_balance(self) -> None:
-        account = BankAccount(
-            1234,
-            300.00,
-            self.owner,
-            AccountStatus.ACTIVE
+    def test_withdraw_amount_exceeds_balance(self):
+        try:
+            self.account.withdraw(Decimal("500.00"))
+        except ValueError as exception:
+            self.assertEqual(type(exception), ValueError)
+            self.assertEqual(
+                str(exception),
+                "amount cannot exceed the account balance"
+            )
+
+    def test_str(self):
+        self.account.deposit(Decimal("6364.67"))
+
+        self.assertEqual(
+            str(self.account),
+            "Account Number: 20019 Balance: $6,764.67"
         )
 
-        account.deposit(100.00)
 
-        expected = 400.00
-        actual = account._BankAccount__balance
-
-        self.assertEqual(expected, actual)
-
-
-    def test_withdraw_amount_less_than_zero(self) -> None:
-        account = BankAccount(
-            1234,
-            500.00,
-            self.owner,
-            AccountStatus.ACTIVE
-        )
-
-        with self.assertRaisesRegex(
-            ValueError,
-            "amount must be a value greater than or equal to zero."
-        ):
-            account.withdraw(-100.00)
-
-    def test_withdraw_amount_zero(self) -> None:
-        account = BankAccount(
-            1234,
-            400.00,
-            self.owner,
-            AccountStatus.ACTIVE
-        )
-
-        account.withdraw(0)
-
-        expected = 400.00
-        actual = account._BankAccount__balance
-
-        self.assertEqual(expected, actual)
-
-    def test_withdraw_amount_greater_than_balance(self) -> None:
-        account = BankAccount(
-            1234,
-            500.00,
-            self.owner,
-            AccountStatus.ACTIVE
-        )
-
-        with self.assertRaisesRegex(
-            ValueError,
-            "amount cannot exceed the account balance."
-        ):
-            account.withdraw(600.00)
-
-    def test_withdraw_decreases_balance(self) -> None:
-        account = BankAccount(
-            1234,
-            400.00,
-            self.owner,
-            AccountStatus.ACTIVE
-        )
-
-        account.withdraw(100.00)
-
-        expected = 300.00
-        actual = account._BankAccount__balance
-
-        self.assertEqual(expected, actual)
-
-
-def test_str(self) -> None:
-    account = BankAccount(
-        1234,
-        1234.56,
-        self.owner,
-        AccountStatus.ACTIVE
-    )
-
-    expected = "Account ID: 1234 Balance: $1,234.56"
-    actual = str(account)
-
-    self.assertEqual(expected, actual)
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

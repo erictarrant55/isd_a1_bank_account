@@ -3,7 +3,7 @@ from account.account_status import AccountStatus
 import unittest
 
 __author__ = "Eric Tarrant"
-__verison__ = "1.0.0"
+__version__ = "1.0.0"
 
 class TestInit(unittest.TestCase):
     """Defines test for __init__"""

@@ -1,5 +1,6 @@
 from account.transaction_status import TransactionStatus
 from decimal import Decimal
+from abc import abstractmethod, ABC
 
 __author__ = "Eric Tarrant"
 __version__ = "1.0.0"
@@ -62,7 +63,8 @@ class Transaction:
         return self.__account
 
     @property
-    def fees(self) -> decimal.Decimal:
+    @abstractmethod
+    def fees(self) -> Decimal:
         """
         Return the transaction fees.
 
@@ -71,7 +73,8 @@ class Transaction:
         """
         return self.__fees
 
-    def process() -> None:
+    @abstractmethod
+    def process() -> None:    
         """
         Process the transaction.
 
@@ -87,4 +90,9 @@ class Transaction:
         Returns:
             str: A string representation of the transaction.
         """
-        return f"Transaction ID: {self.__transaction_id}, Account: {self.__account}, Status: {self.__status}"
+        return (
+            f"ID: {self.transaction_id}\n"
+            f"STATUS: {self.status.name}\n"
+            f"AMOUNT: ${self.amount:,.2f}\n"
+            f"SOURCE ACCT: {self.account.account_id}"
+        )

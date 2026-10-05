@@ -17,5 +17,5 @@ class TransactionStatus(int, Enum):
             FAILED (int): Account has failed.
     """
     PENDING = 1
-    PROCESSING = 2
+    PROCESSED = 2
     FAILED = 3

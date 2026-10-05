@@ -1,6 +1,9 @@
 from account.account_status import AccountStatus
 from email_validator import validate_email, EmailNotValidError
 
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
 class Client:
     """
     Represents the client's profile.
@@ -75,11 +78,29 @@ class Client:
 
     @property
     def email_address(self):
+        """
+        Returns the client's email address.
 
+        Returns:
+            str: The email address of the client.
+        """
         return self.__email_address
     
     @email_address.setter
     def email_address(self, email_address: str) -> None:
+        """
+        This method updates the client's email address.
+
+        The email address that is provide gets stripped of leading and
+        trailing whitespace, validated, and then stored in its
+        normalized form.
+
+        Args:
+            email_address (str): The new email address.
+
+        Raises:
+            ValueError: If the email address is invalid.
+        """
         email_address = email_address.strip()
 
         email = validate_email(
@@ -89,4 +110,13 @@ class Client:
         self.__email_address = email.normalized
 
     def __str__(self) -> str:
+        """
+        Returns a string representation of the client.
+
+        The returned string contains the client's name, ID,
+        and email address.
+
+        Returns:
+            str: A formatted representation of the client.
+        """
         return f"{self.__name} [{self.__client_id}] - {self.__email_address}"

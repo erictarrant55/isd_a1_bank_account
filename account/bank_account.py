@@ -1,4 +1,8 @@
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
 from account.account_status import AccountStatus
+from decimal import Decimal
 
 class BankAccount:
     """
@@ -38,7 +42,7 @@ class BankAccount:
         """
         
         if account_id <= 0:
-            raise ValueError("account_id must be a value greater than zero.")
+            raise ValueError("account_id must be a value greater than zero")
 
         self.__account_id = account_id
         self.__balance = balance
@@ -87,7 +91,7 @@ class BankAccount:
         """
         return self.__status
 
-    def update_balance(self, amount: float) -> None:
+    def update_balance(self, amount: Decimal) -> None:
         """
         Updates the account balance.
 
@@ -97,9 +101,9 @@ class BankAccount:
         Args:
             amount (float): The new account balance.
         """
-        self.__balance = amount
+        self.__balance += amount
 
-    def deposit(self, amount: float) -> None:
+    def deposit(self, amount: Decimal) -> None:
         """
         Deposits money into the bank account.
 
@@ -114,8 +118,11 @@ class BankAccount:
         """
 
         if amount < 0:
-            raise ValueError("amount must be a value greater than or equal to zero.")
-        self.__balance += amount
+            raise ValueError(
+                "amount must be a value greater than or equal to zero"
+        )
+
+        self.update_balance(amount)
 
     def withdraw(self, amount):
         """
@@ -134,25 +141,25 @@ class BankAccount:
         """
         if amount < 0:
             raise ValueError(
-                "amount must be a value greater than or equal to zero."
+                "amount must be a value greater than or equal to zero"
             )
 
         if amount > self.__balance:
             raise ValueError(
-                "amount cannot exceed the account balance."
+                "amount cannot exceed the account balance"
             )
 
-        self.__balance -= amount
+        self.update_balance(-amount)
         
     def __str__(self) -> str:
         """
         Returns a string representation of the account.
 
         Returns:
-            str: Account ID, balance, owner, and status.
+            str: Account ID, balance.
         """            
-        return (f"Account ID: {self.__account_id}\n"
-                f"Balance: {self.__balance}\n"
-                f"Owner: {self.__owner}\n"
-                f"Status: {self.__status}")
+        return (
+        f"Account Number: {self.__account_id} "
+        f"Balance: ${self.__balance:,.2f}"
+    )
     
