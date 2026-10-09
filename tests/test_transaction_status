@@ -1,0 +1,32 @@
+import unittest
+
+from transaction.transaction_status import TransactionStatus
+
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
+
+class TestInit(unittest.TestCase):
+    """Defines tests to verify the enumeration values are initialized."""
+
+    def test_pending(self) -> None:
+        expected = 1
+        actual = TransactionStatus.PENDING
+
+        self.assertEqual(expected, actual)
+
+    def test_processed(self) -> None:
+        expected = 2
+        actual = TransactionStatus.PROCESSED
+
+        self.assertEqual(expected, actual)
+
+    def test_failed(self) -> None:
+        expected = 3
+        actual = TransactionStatus.FAILED
+
+        self.assertEqual(expected, actual)
+
+
+if __name__ == "__main__":
+    unittest.main()
