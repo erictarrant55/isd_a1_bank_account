@@ -1,3 +1,6 @@
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
 from abc import ABC, abstractmethod
 
 from transaction.transaction_status import TransactionStatus  # adjust to your path

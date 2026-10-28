@@ -1,3 +1,6 @@
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
 from account.account_status import AccountStatus              # adjust paths
 from transaction.transaction import Transaction
 from transaction.transaction_status import TransactionStatus

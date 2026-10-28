@@ -1,3 +1,6 @@
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
 from decimal import Decimal
 
 from account.account_status import AccountStatus
