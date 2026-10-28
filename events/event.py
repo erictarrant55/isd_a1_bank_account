@@ -10,3 +10,19 @@ class Event(EventListener):
     ) -> None:
 
         self._listeners = listeners
+
+    def event(self):
+        
+        pass
+
+    def add_listener(self, listener: EventListener) -> None:
+
+        pass
+
+    def remove_listener(self, listener: EventListener) -> None:
+        
+        pass
+
+    def notify(self, sender: object) -> None:
+
+        pass

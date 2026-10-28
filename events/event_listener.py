@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 
 class EventListener(ABC):
 
-    def update(self,sender: object) -> None:
+    @abstractmethod
+    def update(self, sender: object) -> None:
 
         pass
