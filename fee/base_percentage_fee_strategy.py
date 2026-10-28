@@ -15,6 +15,10 @@ class BasePercentageStrategy(FeeStrategy):
 
         if base_fee >= 0:
             raise ValueError("base_fee must be greater than or equal to zero")
+        
+        if not 0 <= percentage <= 1:
+            raise ValueError("percentage must be a value between 0 and 1 (inclusive)")
+        
         self._percentage = percentage
         self._base_fee = base_fee
 

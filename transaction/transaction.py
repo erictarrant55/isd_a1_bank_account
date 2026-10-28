@@ -3,8 +3,11 @@ __version__ = "1.0.0"
 
 from abc import ABC, abstractmethod
 
-from transaction.transaction_status import TransactionStatus  # adjust to your path
-
+from transaction.transaction_status import TransactionStatus 
+from fee.fee_strategy import FeeStrategy
+from account.bank_account import BankAccount
+from decimal import Decimal
+from events.event import Event
 
 class Transaction(ABC):
     """
@@ -28,9 +31,11 @@ class Transaction(ABC):
     """
     def __init__(
             self, 
-            transaction_id, 
-            amount, 
-            account):
+            transaction_id: str, 
+            amount: Decimal, 
+            account: BankAccount,
+            fee_strategy: FeeStrategy,
+            processed_event: Event):
         """
         Creates a new transaction.
  
@@ -56,9 +61,15 @@ class Transaction(ABC):
         self.__amount = amount
         self.__account = account
         self._status = TransactionStatus.PENDING
-        
+        self._fee_strategy = fee_strategy
+        self._processed_event = Event
+
+    def transaction(self, transaction_id: str, amount: Decimal, account: BankAccount) -> Decimal:
+
+        pass   
+    
     @property
-    def transaction_id(self):
+    def transaction_id(self) -> str:
         """
         Returns the transaction ID.
  
@@ -68,7 +79,7 @@ class Transaction(ABC):
         return self.__transaction_id
 
     @property
-    def amount(self):
+    def amount(self) -> Decimal:
         """
         Returns the amount of the transaction.
  
@@ -78,7 +89,7 @@ class Transaction(ABC):
         return self.__amount
 
     @property
-    def account(self):
+    def account(self) -> BankAccount:
         """
         Returns the account the transaction is made on.
  
@@ -88,7 +99,7 @@ class Transaction(ABC):
         return self.__account
 
     @property
-    def status(self):
+    def status(self) -> TransactionStatus:
         """
         Returns the transaction status.
  
@@ -99,7 +110,7 @@ class Transaction(ABC):
 
     @property
     @abstractmethod
-    def fees(self):
+    def fees(self) -> Decimal:
         """
         Calculates the fee charged for the transaction.
  
@@ -110,6 +121,16 @@ class Transaction(ABC):
         """
         pass
 
+
+    @property
+    def on_processed(self) -> Event:
+        
+        pass
+
+    def set_fee_strategy(strategy: FeeStrategy) -> None:
+
+        pass
+    
     @abstractmethod
     def process(self):
         """
