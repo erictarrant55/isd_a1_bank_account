@@ -122,12 +122,13 @@ class Transaction(ABC):
         pass
 
 
+
     @property
     def on_processed(self) -> Event:
         
         pass
 
-    def set_fee_strategy(strategy: FeeStrategy) -> None:
+    def set_fee_strategy(self, strategy: FeeStrategy) -> None:
 
         pass
     
@@ -139,8 +140,6 @@ class Transaction(ABC):
         Must be implemented by subclasses. The outcome is stored in the
         transaction's status.
         """
-        pass
-
     def __str__(self):
         """
         Returns a string representation of the transaction.
