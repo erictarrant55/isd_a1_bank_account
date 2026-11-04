@@ -5,7 +5,7 @@ from account.account_status import AccountStatus              # adjust paths
 from transaction.transaction import Transaction
 from transaction.transaction_status import TransactionStatus
 from decimal import Decimal
-from bank_account.bank_account import BankAccount
+from account.bank_account import BankAccount
 
 class BankTransferTransaction(Transaction):
     """

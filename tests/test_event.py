@@ -8,6 +8,7 @@ from account.client import Client
 from events.event import Event
 from events.logging_listener import LoggingListener
 from transaction.credit_card_transaction import CreditCardTransaction
+from events.event_listener import EventListener
 __author__ = "Eric Tarrant"
 __version__ = "1.0.0"
 
@@ -115,4 +116,4 @@ class TestNotify(unittest.TestCase):
         self.event.notify(object())
     
         # Assert
-        self.assertEqual(-1, listener.count)   
+        self.assertEqual(0, listener.count)   

@@ -30,12 +30,11 @@ class Transaction(ABC):
         ValueError: If amount is less than or equal to zero.
     """
     def __init__(
-            self, 
-            transaction_id: str, 
-            amount: Decimal, 
-            account: BankAccount,
-            fee_strategy: FeeStrategy,
-            processed_event: Event):
+        self,
+        transaction_id: str,
+        amount: Decimal,
+        account: BankAccount
+            ) -> None:
         """
         Creates a new transaction.
  
@@ -61,8 +60,8 @@ class Transaction(ABC):
         self.__amount = amount
         self.__account = account
         self._status = TransactionStatus.PENDING
-        self._fee_strategy = fee_strategy
-        self._processed_event = Event
+        self.__fee_strategy = None
+        self.__processed_event = Event()
 
     def transaction(self, transaction_id: str, amount: Decimal, account: BankAccount) -> Decimal:
 
@@ -119,18 +118,22 @@ class Transaction(ABC):
         Returns:
             Decimal: The fee charged for the transaction.
         """
-        pass
+        if self.__fee_strategy is None:
+            return Decimal("0.00")
+
+        return self.__fee_strategy.get_fee(self.amount)
 
 
 
     @property
     def on_processed(self) -> Event:
         
-        pass
+        return self.__processed_event
 
     def set_fee_strategy(self, strategy: FeeStrategy) -> None:
+        self.__fee_strategy = fee_strategy
 
-        pass
+        return 
     
     @abstractmethod
     def process(self):
