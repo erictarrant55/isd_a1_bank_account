@@ -5,9 +5,20 @@ from events.event_listener import EventListener
 from transaction.transaction import Transaction
 
 class LoggingListener(EventListener):
-
+    """
+    Represents an event listener that logs transaction details when
+    a transaction when any event occurs.
+    """
     def update(self, sender: object) -> None:
-        
+        """
+        Displays the details of the processed transaction.
+
+        Args:
+            sender (object): The object that triggered the event.
+
+        Raises:
+            TypeError: If sender is not an instance of Transaction.
+        """
         if not isinstance(sender, Transaction):
             raise TypeError("sender must be a Transaction type")
 
