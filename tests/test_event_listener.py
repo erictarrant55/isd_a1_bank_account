@@ -28,7 +28,7 @@ class TestInit(unittest.TestCase):
  
         # Assert
  
-    def test_subclass_without_update_cannot_be_instantiated(self) -> None:
+    def test_subclass_without_update_cannot_have_instance(self) -> None:
         # Arrange
         # Act
         with self.assertRaises(TypeError):
@@ -36,7 +36,7 @@ class TestInit(unittest.TestCase):
  
         # Assert
  
-    def test_subclass_with_update_can_be_instantiated(self) -> None:
+    def test_subclass_with_update_can_have_instance(self) -> None:
         # Arrange
         # Act
         listener = CompleteListener()
