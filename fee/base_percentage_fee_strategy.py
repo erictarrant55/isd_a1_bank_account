@@ -40,7 +40,7 @@ class BasePercentageFeeStrategy(FeeStrategy):
     def get_fee(self, transaction_amount: Decimal) -> Decimal:
         percentage_fee = transaction_amount * self.__percentage
 
-        if percentage_fee > self.__base_fee:
-            return round(percentage_fee, 2)
+        if percentage_fee > base_fee:
+            return round(base_fee, 2)
 
-        return round(self.__base_fee, 2)
+        return round(percentage_fee, 2)

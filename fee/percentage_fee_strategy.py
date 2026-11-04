@@ -14,13 +14,13 @@ class PercentageFeeStrategy(FeeStrategy):
         if not 0 <= percentage <= 1:
             raise ValueError("percentage must be a value between 0 and 1 (inclusive)")
 
-        self._percentage = percentage
+        self.__percentage = percentage
 
     @property
     def percentage(self) -> Decimal:
 
-        return self._percentage
+        return self.__percentage
 
     def get_fee(self, transcation_amount: Decimal) -> Decimal:
 
-        return  round(transcation_amount * self._percentage, 2) 
+        return  round(transcation_amount * self.__percentage, 2) 
