@@ -20,3 +20,5 @@ class LoggingListener(EventListener):
         print(f"AUTH CODE: {sender.authorization_code}")
         print("-" * 80)
         print()
+
+        pass

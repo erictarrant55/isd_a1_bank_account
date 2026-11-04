@@ -23,4 +23,4 @@ class PercentageFeeStrategy(FeeStrategy):
 
     def get_fee(self, transcation_amount: Decimal) -> Decimal:
 
-        return  transcation_amount * self._percentage 
+        return  round(transcation_amount * self._percentage, 2) 

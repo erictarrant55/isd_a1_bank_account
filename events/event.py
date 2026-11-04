@@ -3,29 +3,21 @@ __version__ = "1.0.0"
 
 from events.event_listener import EventListener
 
-class Event(EventListener):
-    def __init__(
-        self,
-        listeners: list[EventListener]
-    ) -> None:
-
-        self._listeners = listeners
-
-    def event(self):
-        
-        pass
-
+ 
+ 
+class Event:
+    """An object's event; notifies its listeners when raised."""
+ 
+    def __init__(self):
+        self.__listeners: list[EventListener] = []
+ 
     def add_listener(self, listener: EventListener) -> None:
-
-        
-        return self._listeners + listener
-
+        self.__listeners.append(listener)
+ 
     def remove_listener(self, listener: EventListener) -> None:
-
-        return self._listeners - listener
-
+        if listener in self.__listeners:
+            self.__listeners.remove(listener)
+ 
     def notify(self, sender: object) -> None:
-        if self.add_listener and self.remove_listener:
-            for listener in self._listeners:
-                listener.update(sender)
-        pass
+        for listener in list(self.__listeners):
+            listener.update(sender)
