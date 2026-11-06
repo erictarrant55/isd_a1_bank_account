@@ -1,7 +1,11 @@
+__author__ = "Eric Tarrant"
+__version__ = "1.0.0"
+
 from account.account_status import AccountStatus              # adjust paths
 from transaction.transaction import Transaction
 from transaction.transaction_status import TransactionStatus
 from decimal import Decimal
+from account.bank_account import BankAccount
 
 class BankTransferTransaction(Transaction):
     """
@@ -30,7 +34,11 @@ class BankTransferTransaction(Transaction):
     """    
     BASE_FEE = Decimal("1.00")
     FEE_RATE = Decimal("0.007")
-    def __init__(self, transaction_id, amount, account, target_account):
+    def __init__(self, 
+                 transaction_id: str, 
+                 amount: Decimal, 
+                 account: BankAccount, 
+                 target_account: BankAccount):
         """
         Creates a new bank transfer transaction.
  
@@ -78,7 +86,7 @@ class BankTransferTransaction(Transaction):
         
         return max(self.BASE_FEE, self.amount * self.FEE_RATE)
 
-    def process(self):
+    def process(self) -> None:
         """
         Attempts to complete the transfer.
  
