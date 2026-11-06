@@ -49,3 +49,4 @@ class Event:
         """
         for listener in list(self.__listeners):
             listener.update(sender)
+        pass
