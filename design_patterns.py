@@ -7,6 +7,8 @@ from transaction.credit_card_transaction import CreditCardTransaction
 from fee.percentage_fee_strategy import PercentageFeeStrategy
 from fee.base_percentage_fee_strategy import BasePercentageFeeStrategy
 from events.logging_listener import LoggingListener
+from account.bank_account import BankAccount
+from decimal import Decimal
 
 __author__ = "Eric Tarrant"
 __version__ = "1.0.0"
@@ -19,9 +21,9 @@ def main() -> None:
     transaction = CreditCardTransaction(
         "12345",
         Decimal("1000.00"),
-        account,
-        "AUTH123"
-    )
+        account = BankAccount,
+        authorization_code="AUTH123"
+        )
      
     # 2. Print the transaction fee
     print(transaction.fees)

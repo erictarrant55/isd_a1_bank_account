@@ -62,6 +62,7 @@ class Transaction(ABC):
         self._status = TransactionStatus.PENDING
         self.__fee_strategy = None
         self.__processed_event = Event()
+        self.__fee_strategy = None
 
     def transaction(self, transaction_id: str, amount: Decimal, account: BankAccount) -> Decimal:
 
@@ -130,10 +131,14 @@ class Transaction(ABC):
         
         return self.__processed_event
 
-    def set_fee_strategy(self, strategy: FeeStrategy) -> None:
-        self.__fee_strategy = fee_strategy
+    def set_fee_strategy(self, Strategy: FeeStrategy) -> None:
+        """
+        Sets the fee strategy used to calculate the transaction's fees.
 
-        return 
+        Args:
+            fee_strategy (FeeStrategy): The strategy to apply.
+        """
+        self.__fee_strategy = Strategy
     
     @abstractmethod
     def process(self):
@@ -156,3 +161,5 @@ class Transaction(ABC):
             f"AMOUNT: ${self.amount:,.2f}\n"
             f"SOURCE ACCT: {self.account.account_id}"
         )
+
+    

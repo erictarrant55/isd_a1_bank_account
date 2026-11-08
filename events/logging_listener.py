@@ -32,4 +32,3 @@ class LoggingListener(EventListener):
         print("-" * 80)
         print()
 
-        pass

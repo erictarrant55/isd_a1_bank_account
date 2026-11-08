@@ -24,11 +24,7 @@ class Event:
  
     def remove_listener(self, listener: EventListener) -> None:
         """
-<<<<<<< HEAD
         Removes a listener from the event if it has been registered.
-=======
-        Removes a listener from the event if it is registered.
->>>>>>> assignment3
 
         Args:
             listener (EventListener): The listener to be removed.
@@ -38,11 +34,7 @@ class Event:
  
     def notify(self, sender: object) -> None:
         """
-<<<<<<< HEAD
         It notifies if all registered listeners that an event has occurred.
-=======
-        Notifies all registered listeners that an event has occurred.
->>>>>>> assignment3
 
         Args:
             sender (object): The object that triggered the event.

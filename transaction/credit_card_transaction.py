@@ -110,6 +110,7 @@ class CreditCardTransaction(Transaction):
             self.account.withdraw(self.amount)
             self.account.withdraw(self.fees)
             self._status = TransactionStatus.PROCESSED
+            self.on_processed.notify(self)
 
     def __str__(self) -> str:
         """
