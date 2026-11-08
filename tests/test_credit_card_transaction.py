@@ -6,6 +6,7 @@ from account.bank_account import BankAccount
 from account.client import Client
 from transaction.credit_card_transaction import CreditCardTransaction
 from transaction.transaction_status import TransactionStatus
+from fee.percentage_fee_strategy import PercentageFeeStrategy
 __author__ = "Eric Tarrant"
 __version__ = "1.0.0"
 
@@ -145,6 +146,10 @@ class TestFees(unittest.TestCase):
             "AUTH123"
         )
 
+        transaction.set_fee_strategy(
+            PercentageFeeStrategy(Decimal("0.02"))
+        )
+
         # Act
         actual = transaction.fees
 
@@ -198,6 +203,10 @@ class TestProcess(unittest.TestCase):
             "AUTH123"
         )
 
+        transaction.set_fee_strategy(
+            PercentageFeeStrategy(Decimal("0.02"))
+        )
+
         # Act
         transaction.process()
 
@@ -230,6 +239,10 @@ class TestProcess(unittest.TestCase):
             Decimal("100.00"),
             self.account,
             "AUTH123"
+        )
+
+        transaction.set_fee_strategy(
+            PercentageFeeStrategy(Decimal("0.02"))
         )
 
         # Act
