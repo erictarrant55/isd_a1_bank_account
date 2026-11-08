@@ -47,7 +47,6 @@ class BasePercentageFeeStrategy(FeeStrategy):
         return self.__percentage
 
     @property
-    
     def base_fee(self) -> Decimal:
         """
         Gets the maximum fee that can be charged.
@@ -82,7 +81,5 @@ class BasePercentageFeeStrategy(FeeStrategy):
         Returns:
             Decimal: The calculated transaction fee is rounded to two decimal places.
         """
-        if percentage_fee > self.__base_fee:
-            return round(self.__base_fee, 2)
-
-        return round(percentage_fee, 2)
+        fee = max(self.__base_fee, transaction_amount * self.__percentage)
+        return fee.quantize(Decimal("0.01"))

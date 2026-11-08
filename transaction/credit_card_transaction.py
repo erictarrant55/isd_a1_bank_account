@@ -33,7 +33,6 @@ class CreditCardTransaction(Transaction):
         ValueError: If amount is less than or equal to zero.
     """
     
-    FEE_RATE = Decimal("0.02")
 
     def __init__(
         self,
@@ -78,17 +77,6 @@ class CreditCardTransaction(Transaction):
         """
         return self.__authorization_code
 
-    @property
-    def fees(self) -> Decimal:
-        """
-        Calculates the fee charged to the account.
- 
-        The fee is the amount multiplied by FEE_RATE.
- 
-        Returns:
-            Decimal: The fee charged for the payment.
-        """
-        return self.amount * self.FEE_RATE
 
     def process(self) -> None:
         """

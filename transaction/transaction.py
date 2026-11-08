@@ -109,7 +109,7 @@ class Transaction(ABC):
         return self._status
 
     @property
-    @abstractmethod
+
     def fees(self) -> Decimal:
         """
         Calculates the fee charged for the transaction.
@@ -131,14 +131,14 @@ class Transaction(ABC):
         
         return self.__processed_event
 
-    def set_fee_strategy(self, Strategy: FeeStrategy) -> None:
+    def set_fee_strategy(self, strategy: FeeStrategy) -> None:
         """
         Sets the fee strategy used to calculate the transaction's fees.
 
         Args:
             fee_strategy (FeeStrategy): The strategy to apply.
         """
-        self.__fee_strategy = Strategy
+        self.__fee_strategy = strategy
     
     @abstractmethod
     def process(self):

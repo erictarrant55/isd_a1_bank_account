@@ -23,12 +23,12 @@ class LoggingListener(EventListener):
             raise TypeError("sender must be a Transaction type")
 
         print("TRANSACTION PROCESSED")
-        print("-" * 80)
+        print("=" * 80)
         print(f"ID: {sender.transaction_id}")
         print(f"STATUS: {sender.status.name}")
         print(f"AMOUNT: ${sender.amount:,.2f}")
         print(f"SOURCE ACCT: {sender.account.account_id}")
         print(f"AUTH CODE: {sender.authorization_code}")
-        print("-" * 80)
-        print()
+        print("=" * 80)
+
 
