@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QApplication
 
 from ui.client_services_window import ClientServicesWindow
 
-__author__ = "COMP-2327 Faculty"
+__author__ = "Eric Tarrant"
 __version__ = "1.0.0"
 
 def main() -> None:
